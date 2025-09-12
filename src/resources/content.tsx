@@ -1,40 +1,51 @@
-import { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/types";
+import {
+  About,
+  Blog,
+  Gallery,
+  Home,
+  Newsletter,
+  Person,
+  Social,
+  Work,
+} from "@/types";
 import { Line, Logo, Row, Text } from "@once-ui-system/core";
 
 const person: Person = {
-  firstName: "Selene",
-  lastName: "Yu",
-  name: `Selene Yu`,
-  role: "Design Engineer",
-  avatar: "/images/avatar.jpg",
-  email: "example@gmail.com",
-  location: "Asia/Jakarta", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: ["English", "Bahasa"], // optional: Leave the array empty if you don't want to display languages
+  firstName: "José",
+  lastName: "Martínez Estrada",
+  name: `José`,
+  role: "Web Developer",
+  avatar: "/images/avatar.png",
+  email: "josemartinezestrada111@gmail.com",
+  location: "Europe/Madrid",
+  languages: ["Español(Nativo)", "Inglés(A2)", "Francés(A1)"],
 };
 
 const newsletter: Newsletter = {
   display: true,
-  title: <>Subscribe to {person.firstName}'s Newsletter</>,
-  description: <>My weekly newsletter about creativity and engineering</>,
+  title: (
+    <>
+      Suscribete a mi boletín de información, para obtener las últimas noticias.
+    </>
+  ),
+  description: (
+    <>
+      Mi boletín de noticias semanales sobre novedades en el mundo del
+      desarrollo e informática.
+    </>
+  ),
 };
 
 const social: Social = [
-  // Links are automatically displayed.
-  // Import new icons in /once-ui/icons.ts
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/once-ui-system",
+    link: "https://github.com/jxse111",
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/company/once-ui/",
-  },
-  {
-    name: "Threads",
-    icon: "threads",
-    link: "https://www.threads.com/@once_ui",
+    link: "https://www.linkedin.com/in/jos%C3%A9-mart%C3%ADnez-estrada-997b77208/",
   },
   {
     name: "Email",
@@ -46,18 +57,18 @@ const social: Social = [
 const home: Home = {
   path: "/",
   image: "/images/og/home.jpg",
-  label: "Home",
+  label: "Inicio",
   title: `${person.name}'s Portfolio`,
-  description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Building bridges between design and code</>,
+  description: `Portfolio profesional sobre mi trabajo como ${person.role}`,
+  headline: <>Haciendo que el diseño cobre vida en cada línea de código.</>,
   featured: {
     display: true,
     title: (
       <Row gap="12" vertical="center">
-        <strong className="ml-4">Once UI</strong>{" "}
+        <strong className="ml-4">ALGRANO SL</strong>{" "}
         <Line background="brand-alpha-strong" vert height="20" />
         <Text marginRight="4" onBackground="brand-medium">
-          Featured work
+          Proyectos destacados
         </Text>
       </Row>
     ),
@@ -65,21 +76,17 @@ const home: Home = {
   },
   subline: (
     <>
-      I'm Selene, a design engineer at{" "}
-      <Logo
-        dark
-        icon="/trademarks/wordmark-dark.svg"
-        style={{ display: "inline-flex", top: "0.25em", marginLeft: "-0.25em" }}
-      />
-      , where I craft intuitive
-      <br /> user experiences. After hours, I build my own projects.
+      Mi nombre es José, soy el desarrollador web. Creo y desarrollo proyectos
+      web para empresas y clientes.
+      <br /> Después del trabajo desarrollo mis propios proyectos y sigo
+      formándome.
     </>
   ),
 };
 
 const about: About = {
   path: "/about",
-  label: "About",
+  label: "Sobre Mí",
   title: `About – ${person.name}`,
   description: `Meet ${person.name}, ${person.role} from ${person.location}`,
   tableOfContent: {
@@ -98,52 +105,39 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        Selene is a Jakarta-based design engineer with a passion for transforming complex challenges
-        into simple, elegant design solutions. Her work spans digital interfaces, interactive
-        experiences, and the convergence of design and technology.
+        Apasionado por la tecnología y el desarrollo web Siempre estoy en busca
+        de aprender y mejorar, tanto en el ámbito de la programación como en el
+        de la informática, abarcando desde el hardware hasta el software. Soy
+        perseverante y disfruto viendo los resultados de mi esfuerzo,
+        compartiendo ideas y aprendiendo de los demás.
       </>
     ),
   },
   work: {
     display: true, // set to false to hide this section
-    title: "Work Experience",
+    title: "Experiencia laboral",
     experiences: [
       {
-        company: "FLY",
-        timeframe: "2022 - Present",
-        role: "Senior Design Engineer",
+        company: "TECH LINKU GROUP SL",
+        timeframe: "03/2025 - 06/2025",
+        role: "Técnico en prácticas",
         achievements: [
           <>
-            Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user
-            engagement and 30% faster load times.
+            Colaboré con los departamentos de IT, comercial y técnico en la
+            gestión de productos electrónicos, control de inventario y
+            desarrollo web, así como en el diseño de elementos visuales
+            publicitarios para la página.
           </>,
-          <>
-            Spearheaded the integration of AI tools into design workflows, enabling designers to
-            iterate 50% faster.
-          </>,
-        ],
-        images: [
-          // optional: leave the array empty if you don't want to display images
-          {
-            src: "/images/projects/project-01/cover-01.jpg",
-            alt: "Once UI Project",
-            width: 16,
-            height: 9,
-          },
         ],
       },
       {
-        company: "Creativ3",
-        timeframe: "2018 - 2022",
-        role: "Lead Designer",
+        company: "Updigital Almeria",
+        timeframe: "03/2022 - 06/2022",
+        role: "Técnico en reparación de equipos informáticos",
         achievements: [
           <>
-            Developed a design system that unified the brand across multiple platforms, improving
-            design consistency by 40%.
-          </>,
-          <>
-            Led a cross-functional team to launch a new product line, contributing to a 15% increase
-            in overall company revenue.
+            Realicé la parte de montaje, reparación y mantenimiento de equipos
+            informáticos.
           </>,
         ],
         images: [],
@@ -152,78 +146,101 @@ const about: About = {
   },
   studies: {
     display: true, // set to false to hide this section
-    title: "Studies",
+    title: "Estudios",
     institutions: [
       {
-        name: "University of Jakarta",
-        description: <>Studied software engineering.</>,
+        name: "IES Aguadulce",
+        description: (
+          <>
+            DAW: Formación de grado superior en Desarrollo de Aplicaciones Web.
+          </>
+        ),
       },
       {
-        name: "Build the Future",
-        description: <>Studied online marketing and personal branding.</>,
+        name: "IES Campos de Níjar",
+        description: (
+          <>
+            SMR: Formación de grado medio en Sistemas Microinformáticos y Redes.
+          </>
+        ),
       },
     ],
   },
   technical: {
     display: true, // set to false to hide this section
-    title: "Technical skills",
+    title: "Habilidades técnicas",
     skills: [
       {
-        title: "Figma",
+        title: "Primer año académico (DAW)",
         description: (
-          <>Able to prototype in Figma with Once UI with unnatural speed.</>
+          <>
+            Experiencia en programación en Java, diseño y gestión de bases de
+            datos con MySQL/SQL Live, desarrollo de interfaces básicas con HTML
+            y CSS, y creación de pruebas unitarias utilizando JUnit.
+          </>
         ),
         tags: [
           {
-            name: "Figma",
-            icon: "figma",
+            name: "java",
+            icon: "java",
+          },
+          {
+            name: "MySQL",
+            icon: "MySQL",
+          },
+          {
+            name: "HTML",
+            icon: "HTML",
+          },
+          {
+            name: "CSS",
+            icon: "CSS",
+          },
+          {
+            name: "JUnit",
+            icon: "JUnit",
+          },
+        ],
+      },
+      {
+        title: "Segundo año académico (DAW)",
+        description: (
+          <>
+            Experiencia en desarrollo con PHP y gestión de bases de datos
+            mediante PhpMyAdmin. Manejo de entornos locales con XAMPP,
+            desarrollo de APIs RESTful y uso del framework Angular 17. Durante
+            mi proyecto de fin de curso adquirí conocimientos prácticos en
+            Docker, incluyendo Docker Compose y la creación de Dockerfiles.
+          </>
+        ),
+        tags: [
+          {
+            name: "php",
+            icon: "php",
+          },
+          {
+            name: "angular",
+            icon: "angular",
+          },
+          {
+            name: "phpmyadmin",
+            icon: "phpmyadmin",
+          },
+          {
+            name: "docker",
+            icon: "docker",
           },
         ],
         // optional: leave the array empty if you don't want to display images
         images: [
           {
-            src: "/images/projects/project-01/cover-02.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-          {
-            src: "/images/projects/project-01/cover-03.jpg",
-            alt: "Project image",
+            src: "/images/projects/algrano/Algrano.png",
+            alt: "Imagen Algrano",
             width: 16,
             height: 9,
           },
         ],
       },
-      {
-        title: "Next.js",
-        description: (
-          <>Building next gen apps with Next.js + Once UI + Supabase.</>
-        ),
-        tags: [
-          {
-            name: "JavaScript",
-            icon: "javascript",
-          },
-          {
-            name: "Next.js",
-            icon: "nextjs",
-          },
-          {
-            name: "Supabase",
-            icon: "supabase",
-          },
-        ],
-        // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-04.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
-      },  
     ],
   },
 };
@@ -239,16 +256,16 @@ const blog: Blog = {
 
 const work: Work = {
   path: "/work",
-  label: "Work",
-  title: `Projects – ${person.name}`,
-  description: `Design and dev projects by ${person.name}`,
+  label: "Proyectos",
+  title: `Mis proyectos`,
+  description: `Proyectos creados y desarrollados por ${person.name}`,
   // Create new project pages by adding a new .mdx file to app/blog/posts
   // All projects will be listed on the /home and /work routes
 };
 
 const gallery: Gallery = {
   path: "/gallery",
-  label: "Gallery",
+  label: "Galería de imágenes",
   title: `Photo gallery – ${person.name}`,
   description: `A photo collection by ${person.name}`,
   // Images by https://lorant.one
