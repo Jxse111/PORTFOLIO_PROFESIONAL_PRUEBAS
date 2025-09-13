@@ -87,7 +87,7 @@ const home: Home = {
 const about: About = {
   path: "/about",
   label: "Sobre Mí",
-  title: `About – ${person.name}`,
+  title: `Sobre mí – ${person.name}`,
   description: `Meet ${person.name}, ${person.role} from ${person.location}`,
   tableOfContent: {
     display: true,
@@ -234,7 +234,7 @@ const about: About = {
         // optional: leave the array empty if you don't want to display images
         images: [
           {
-            src: "/images/projects/algrano/Algrano.png",
+            src: "/images/projects/algrano/ALGRANO.png",
             alt: "Imagen Algrano",
             width: 16,
             height: 9,
@@ -301,48 +301,33 @@ const gallery: Gallery = {
   description: `Album creado por ${person.name}`,
   // Images by https://lorant.one
   // These are placeholder images, replace with your own
-  /*images: [
+  images: [
     {
-      src: "/images/gallery/horizontal-1.jpg",
+      src: "/images/gallery/Paisaje2.jpg",
       alt: "image",
       orientation: "horizontal",
     },
     {
-      src: "/images/gallery/vertical-4.jpg",
+      src: "/images/gallery/Paisaje1.jpg",
       alt: "image",
       orientation: "vertical",
     },
     {
-      src: "/images/gallery/horizontal-3.jpg",
+      src: "/images/gallery/Paisaje4.jpg",
       alt: "image",
       orientation: "horizontal",
     },
     {
-      src: "/images/gallery/vertical-1.jpg",
+      src: "/images/gallery/Paisaje3.jpg",
       alt: "image",
       orientation: "vertical",
     },
     {
-      src: "/images/gallery/vertical-2.jpg",
+      src: "/images/gallery/Paisaje5.jpg",
       alt: "image",
       orientation: "vertical",
     },
-    {
-      src: "/images/gallery/horizontal-2.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/horizontal-4.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-3.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-  ],*/
+  ],
 };
 
 export { person, social, newsletter, home, about, blog, work, gallery };
