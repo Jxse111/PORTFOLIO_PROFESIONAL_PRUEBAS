@@ -14,7 +14,7 @@ const person: Person = {
   firstName: "José",
   lastName: "Martínez Estrada",
   name: `José`,
-  role: "Web Developer",
+  role: "Desarrollador Web",
   avatar: "/images/avatar.png",
   email: "josemartinezestrada111@gmail.com",
   location: "Europe/Madrid",
@@ -241,6 +241,37 @@ const about: About = {
           },
         ],
       },
+      {
+        title:
+          "Habilidades adquiridas en Sistemas Microinformáticos y Redes (SMR)",
+        description: (
+          <>
+            Experiencia en ensamblaje y mantenimiento de equipos de sobremesa y
+            portátiles, incluyendo la instalación, configuración y optimización
+            del sistema para un rendimiento eficiente. Conocimientos en
+            ciberseguridad básica y administración de redes locales (LAN/WLAN),
+            así como en la detección y resolución de incidencias técnicas.
+            Durante la formación adquirí competencias en instalación de sistemas
+            operativos, gestión de servidores, configuración de dispositivos de
+            red, soporte técnico a usuarios y seguridad informática a nivel
+            básico.
+          </>
+        ),
+        tags: [
+          {
+            name: "apache tomcat",
+            icon: "apache Tomcat",
+          },
+          {
+            name: "ubuntu server",
+            icon: "ubuntu server",
+          },
+          {
+            name: "windows server",
+            icon: "windows server",
+          },
+        ],
+      },
     ],
   },
 };
@@ -248,8 +279,8 @@ const about: About = {
 const blog: Blog = {
   path: "/blog",
   label: "Blog",
-  title: "Writing about design and tech...",
-  description: `Read what ${person.name} has been up to recently`,
+  title: "Escribiendo sobre desarrollo y nuevas tecnologías...",
+  description: `ee lo que ${person.name} ha estado haciendo recientemente.`,
   // Create new blog posts by adding a new .mdx file to app/blog/posts
   // All posts will be listed on the /blog route
 };
@@ -266,11 +297,11 @@ const work: Work = {
 const gallery: Gallery = {
   path: "/gallery",
   label: "Galería de imágenes",
-  title: `Photo gallery – ${person.name}`,
-  description: `A photo collection by ${person.name}`,
+  title: `Galería de imágenes – ${person.name}`,
+  description: `Album creado por ${person.name}`,
   // Images by https://lorant.one
   // These are placeholder images, replace with your own
-  images: [
+  /*images: [
     {
       src: "/images/gallery/horizontal-1.jpg",
       alt: "image",
@@ -311,7 +342,7 @@ const gallery: Gallery = {
       alt: "image",
       orientation: "vertical",
     },
-  ],
+  ],*/
 };
 
 export { person, social, newsletter, home, about, blog, work, gallery };
