@@ -1,7 +1,4 @@
 # Portfolio Profesional
-
-[![Licence](https://img.shields.io/badge/licencia-MIT-blue)](#licencia)
-
 Mi **Portfolio Profesional** desarrollado con **Next.js / TypeScript / SCSS**, desplegado en **Vercel**, que sirve como vitrina de mis habilidades, proyectos y experiencia.
 
 ---
@@ -62,3 +59,4 @@ Repositorio: [GitHub](https://github.com/Jxse111/Portfolio_Profesional)
 ├── tsconfig.json         # Configuración de TypeScript
 ├── .eslintrc.json        # Configuración del linter
 └── LICENSE               # Licencia del proyecto
+
