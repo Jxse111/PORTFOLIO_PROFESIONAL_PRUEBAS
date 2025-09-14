@@ -58,7 +58,7 @@ const home: Home = {
   path: "/",
   image: "/images/og/home.jpg",
   label: "Inicio",
-  title: `${person.name}'s Portfolio`,
+  title: `Portfolio Profesional de ${person.name}`,
   description: `Portfolio profesional sobre mi trabajo como ${person.role}`,
   headline: <>Haciendo que el diseño cobre vida en cada línea de código.</>,
   featured: {
