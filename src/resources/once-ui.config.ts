@@ -230,3 +230,10 @@ export {
   effects,
   dataStyle,
 };
+
+export const analytics = {
+  googleAnalytics: {
+    id: process.env.NEXT_PUBLIC_GA_ID || "", // Tu ID de GA4
+    enabled: process.env.NODE_ENV === "production", // Solo en producción
+  },
+};

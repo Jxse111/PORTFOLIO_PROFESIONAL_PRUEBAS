@@ -3,6 +3,7 @@ import "@once-ui-system/core/css/tokens.css";
 import "@/resources/custom.css";
 
 import classNames from "classnames";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import {
   Background,
@@ -31,11 +32,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <Flex
       suppressHydrationWarning
       as="html"
-      lang="en"
+      lang="es" // Cambiado de "en" a "es" para tu sitio en español
       fillWidth
       className={classNames(
         fonts.heading.variable,
@@ -163,6 +167,9 @@ export default async function RootLayout({
             </Flex>
           </Flex>
           <Footer />
+          
+          {/* Google Analytics - Solo se carga en producción y si existe el ID */}
+          {isProduction && gaId && <GoogleAnalytics gaId={gaId} />}
         </Column>
       </Providers>
     </Flex>
