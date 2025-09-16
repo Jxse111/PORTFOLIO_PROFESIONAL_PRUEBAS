@@ -1,4 +1,3 @@
-<meta name="google-site-verification" content="VckdCxqskD_EuWFyUEYHMDqp3345V5-zc61gvmPAIlY" />
 import {
   About,
   Blog,
