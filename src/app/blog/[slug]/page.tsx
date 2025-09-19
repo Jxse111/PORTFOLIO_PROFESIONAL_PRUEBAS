@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { CustomMDX, ScrollToHash } from "@/components";
+import { Comments } from "@/components/blog/Comments";
+import { Tags } from "@/components/blog/Tags";
 import {
   Meta,
   Schema,
@@ -98,8 +100,9 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
               <Text variant="label-strong-m">Blog</Text>
             </SmartLink>
             <Text variant="body-default-xs" onBackground="neutral-weak" marginBottom="12">
-              {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
+              {post.metadata.publishedAt && formatDate(post.metadata.publishedAt, false)}
             </Text>
+            <Tags tags={post.metadata.tags} className="mb-8" />
             <Heading variant="display-strong-m">{post.metadata.title}</Heading>
           </Column>
           <Row marginBottom="32" horizontal="center">
@@ -138,6 +141,20 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
               Post recientes
             </Heading>
             <Posts exclude={[post.slug]} range={[1, 2]} columns="2" thumbnail direction="column" />
+          </Column>
+          <Column maxWidth="m" fillWidth horizontal="center" paddingTop="xl">
+            <Comments 
+              repo="tu-usuario/tu-repositorio" // Reemplaza con tu usuario y repositorio de GitHub
+              repoId="R_kgDOJw" // Reemplaza con tu repo ID (puedes obtenerlo de la configuración de Giscus)
+              category="Comentarios"
+              categoryId="DIC_kwDOJw" // Reemplaza con tu category ID (puedes obtenerlo de la configuración de Giscus)
+              mapping="pathname"
+              reactionsEnabled="1"
+              emitMetadata="0"
+              inputPosition="bottom"
+              theme="preferred_color_scheme"
+              lang="es"
+            />
           </Column>
           <ScrollToHash />
         </Column>

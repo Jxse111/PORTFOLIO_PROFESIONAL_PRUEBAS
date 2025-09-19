@@ -3,6 +3,7 @@
 import { Card, Column, Media, Row, Avatar, Text } from "@once-ui-system/core";
 import { formatDate } from "@/utils/formatDate";
 import { person } from "@/resources";
+import { Tags } from "./Tags";
 
 interface PostProps {
   post: any;
@@ -48,6 +49,7 @@ export default function Post({ post, thumbnail, direction }: PostProps) {
               {formatDate(post.metadata.publishedAt, false)}
             </Text>
           </Row>
+          <Tags tags={post.metadata.tags} />
           <Text variant="heading-strong-l" wrap="balance">
             {post.metadata.title}
           </Text>
