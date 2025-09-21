@@ -1,3 +1,4 @@
+import React from "react";
 import "@once-ui-system/core/css/styles.css";
 import "@once-ui-system/core/css/tokens.css";
 import "@/resources/custom.css";
@@ -18,19 +19,22 @@ import { Footer, Header, RouteGuard, Providers } from "@/components";
 import { baseURL, effects, fonts, style, dataStyle, home } from "@/resources";
 
 export async function generateMetadata() {
-  return Meta.generate({
+  const meta = Meta.generate({
     title: home.title,
     description: home.description,
     baseURL: baseURL,
     path: home.path,
     image: home.image,
-    meta: [
-      {
-        name: 'google-site-verification',
-        content: 'VckdCxqskD_EuWFyUEYHMDqp3345V5-zc61gvmPAIlY' // Reemplaza esto con tu código de verificación
-      }
-    ]
   });
+
+  // Añadir la verificación de Google Search Console
+  meta.other = meta.other || [];
+  meta.other.push({
+    name: 'google-site-verification',
+    content: 'VckdCxqskD_EuWFyUEYHMDqp3345V5-zc61gvmPAIlY'
+  });
+
+  return meta;
 }
 
 export default async function RootLayout({
