@@ -19,6 +19,7 @@ import { Footer, Header, RouteGuard, Providers } from "@/components";
 import { baseURL, effects, fonts, style, dataStyle, home } from "@/resources";
 
 export async function generateMetadata() {
+  // Generar los metadatos base
   const meta = Meta.generate({
     title: home.title,
     description: home.description,
@@ -27,14 +28,14 @@ export async function generateMetadata() {
     image: home.image,
   });
 
-  // Add Google Search Console verification
-  meta.other = meta.other || [];
-  meta.other.push({
-    name: 'google-site-verification',
-    content: 'VckdCxqskD_EuWFyUEYHMDqp3345V5-zc61gvmPAIlY'
-  });
-
-  return meta;
+  // Crear un nuevo objeto de metadatos con la verificación de Google
+  return {
+    ...meta,
+    other: {
+      ...(meta.other || {}),
+      'google-site-verification': 'VckdCxqskD_EuWFyUEYHMDqp3345V5-zc61gvmPAIlY'
+    }
+  };
 }
 
 export default async function RootLayout({
