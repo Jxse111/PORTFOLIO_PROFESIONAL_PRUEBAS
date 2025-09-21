@@ -4,7 +4,7 @@ import "@once-ui-system/core/css/tokens.css";
 import "@/resources/custom.css";
 
 import classNames from "classnames";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from 'next/script';
 
 import {
   Background,
@@ -50,7 +50,7 @@ export default async function RootLayout({
     <Flex
       suppressHydrationWarning
       as="html"
-      lang="es" // Cambiado de "en" a "es" para tu sitio en español
+      lang="es" 
       fillWidth
       className={classNames(
         fonts.heading.variable,
@@ -180,7 +180,22 @@ export default async function RootLayout({
           <Footer />
 
           {/* Google Analytics - Solo se carga en producción y si existe el ID */}
-          {isProduction && gaId && <GoogleAnalytics gaId={gaId} />}
+          {isProduction && gaId && (
+            <>
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+                strategy="afterInteractive"
+              />
+              <Script id="google-analytics" strategy="afterInteractive">
+                {`
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${gaId}');
+                `}
+              </Script>
+            </>
+          )}
         </Column>
       </Providers>
     </Flex>
