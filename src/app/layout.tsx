@@ -35,6 +35,7 @@ export async function generateMetadata() {
   });
 
   return meta;
+}
 
 export default async function RootLayout({
   children,
