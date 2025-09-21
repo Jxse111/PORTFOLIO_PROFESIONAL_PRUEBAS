@@ -27,7 +27,7 @@ export async function generateMetadata() {
     image: home.image,
   });
 
-  // Añadir la verificación de Google Search Console
+  // Add Google Search Console verification
   meta.other = meta.other || [];
   meta.other.push({
     name: 'google-site-verification',
@@ -35,7 +35,6 @@ export async function generateMetadata() {
   });
 
   return meta;
-}
 
 export default async function RootLayout({
   children,
