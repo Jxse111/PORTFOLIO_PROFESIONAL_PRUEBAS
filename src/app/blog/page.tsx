@@ -1,6 +1,7 @@
 import { Meta, Schema } from "@once-ui-system/core";
 import { baseURL, blog, person } from "@/resources";
 import BlogClient from "./BlogClient";
+import { getServerPosts } from "@/utils/server-utils";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -12,7 +13,11 @@ export async function generateMetadata() {
   });
 }
 
-export default function Blog() {
+export default async function Blog() {
+  const posts = getServerPosts().sort((a, b) => 
+    new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime()
+  );
+
   return (
     <>
       <Schema
@@ -28,7 +33,7 @@ export default function Blog() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <BlogClient />
+      <BlogClient initialPosts={posts} />
     </>
   );
 }

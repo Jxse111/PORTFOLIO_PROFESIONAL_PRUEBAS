@@ -6,18 +6,19 @@ import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { baseURL, blog, person } from "@/resources";
-import { getPosts } from "@/utils/utils";
 
-type Post = {
+export type Post = {
   slug: string;
   metadata: {
     title: string;
-    publishedAt: string;
     summary: string;
+    publishedAt: string;
     image?: string;
-    images: string[];
+    tags?: string[];
+    // Propiedades adicionales que no están en PostType pero que necesitamos
+    images?: string[];
     tag?: string | string[];
-    team: Array<{
+    team?: Array<{
       name: string;
       role: string;
       avatar: string;
@@ -25,19 +26,18 @@ type Post = {
     }>;
     link?: string;
   };
-  content: string;
+  content: string; // Requerido por PostType
 };
 
-export default function BlogClient() {
+interface BlogClientProps {
+  initialPosts: Post[];
+}
+
+export default function BlogClient({ initialPosts }: BlogClientProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   
-  // Obtener todos los posts
-  const allPosts = useMemo<Post[]>(() => {
-    const posts = getPosts(["src", "app", "blog", "posts"]);
-    return posts.sort((a, b) => 
-      new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime()
-    );
-  }, []);
+  // Usar los posts iniciales del servidor
+  const allPosts = useMemo(() => initialPosts, [initialPosts]);
 
   // Extraer todas las etiquetas únicas de los posts
   const allTags = useMemo<string[]>(() => {
