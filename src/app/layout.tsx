@@ -3,7 +3,7 @@ import "@once-ui-system/core/css/tokens.css";
 import "@/resources/custom.css";
 
 import classNames from "classnames";
-import { GoogleAnalytics } from '@next/third-parties/google';
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import {
   Background,
@@ -32,7 +32,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isProduction = process.env.NODE_ENV === 'production';
+  const isProduction = process.env.NODE_ENV === "production";
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
   return (
@@ -45,7 +45,7 @@ export default async function RootLayout({
         fonts.heading.variable,
         fonts.body.variable,
         fonts.label.variable,
-        fonts.code.variable,
+        fonts.code.variable
       )}
     >
       <head>
@@ -167,7 +167,7 @@ export default async function RootLayout({
             </Flex>
           </Flex>
           <Footer />
-          
+
           {/* Google Analytics - Solo se carga en producción y si existe el ID */}
           {isProduction && gaId && <GoogleAnalytics gaId={gaId} />}
         </Column>

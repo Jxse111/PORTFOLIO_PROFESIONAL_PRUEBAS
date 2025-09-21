@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://portfolio-profesional-iota.vercel.app/sitemap.xml
