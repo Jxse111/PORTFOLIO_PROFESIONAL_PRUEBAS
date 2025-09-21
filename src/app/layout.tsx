@@ -24,6 +24,12 @@ export async function generateMetadata() {
     baseURL: baseURL,
     path: home.path,
     image: home.image,
+    meta: [
+      {
+        name: 'google-site-verification',
+        content: 'TU_CODIGO_DE_VERIFICACION_AQUI' // Reemplaza esto con tu código de verificación
+      }
+    ]
   });
 }
 
