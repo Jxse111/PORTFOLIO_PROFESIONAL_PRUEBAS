@@ -4,8 +4,19 @@ import { Card, Column, Media, Row, Avatar, Text } from "@once-ui-system/core";
 import { formatDate } from "@/utils/formatDate";
 import { person } from "@/resources";
 
+interface PostMetadata {
+  title: string;
+  summary: string;
+  publishedAt: string;
+  image?: string;
+  tags?: string[];
+}
+
 interface PostProps {
-  post: any;
+  post: {
+    slug: string;
+    metadata: PostMetadata;
+  };
   thumbnail: boolean;
   direction?: "row" | "column";
 }
@@ -51,10 +62,23 @@ export default function Post({ post, thumbnail, direction }: PostProps) {
           <Text variant="heading-strong-l" wrap="balance">
             {post.metadata.title}
           </Text>
-          {post.metadata.tag && (
-            <Text variant="label-strong-s" onBackground="neutral-weak">
-              {post.metadata.tag}
-            </Text>
+          {post.metadata.tags && (
+            <Row gap="8" wrap>
+              {post.metadata.tags.map((tag: string, index: number) => (
+                <Text 
+                  key={tag}
+                  variant="label-strong-s" 
+                  onBackground="neutral-weak"
+                  style={{ 
+                    backgroundColor: 'var(--color-neutral-weak)',
+                    padding: 'var(--spacing-4) var(--spacing-8)',
+                    borderRadius: '9999px' 
+                  }}
+                >
+                  {tag}
+                </Text>
+              ))}
+            </Row>
           )}
         </Column>
       </Row>
