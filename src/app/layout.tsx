@@ -27,7 +27,7 @@ export async function generateMetadata() {
     meta: [
       {
         name: 'google-site-verification',
-        content: 'TU_CODIGO_DE_VERIFICACION_AQUI' // Reemplaza esto con tu código de verificación
+        content: 'VckdCxqskD_EuWFyUEYHMDqp3345V5-zc61gvmPAIlY' // Reemplaza esto con tu código de verificación
       }
     ]
   });
