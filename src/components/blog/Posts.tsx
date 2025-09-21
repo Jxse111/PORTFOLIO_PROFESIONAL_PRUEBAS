@@ -1,8 +1,9 @@
-import { getPosts } from "@/utils/utils";
+"use client";
+
 import { Grid, Text } from "@once-ui-system/core";
 import Post from "./Post";
 
-interface PostType {
+export interface PostType {
   slug: string;
   metadata: {
     title: string;
@@ -10,6 +11,16 @@ interface PostType {
     publishedAt: string;
     image?: string;
     tags?: string[];
+    // Propiedades adicionales que podrían estar presentes
+    images?: string[];
+    tag?: string | string[];
+    team?: Array<{
+      name: string;
+      role: string;
+      avatar: string;
+      linkedIn: string;
+    }>;
+    link?: string;
   };
   content: string;
 }
@@ -19,37 +30,23 @@ interface PostsProps {
   range?: [number] | [number, number];
   columns?: "1" | "2" | "3";
   thumbnail?: boolean;
-  direction?: "row" | "column";
   exclude?: string[];
+  direction?: "row" | "column";
 }
 
-export function Posts({
-  posts: customPosts,
+export default function Posts({
+  posts: customPosts = [],
   range,
   columns = "1",
   thumbnail = false,
   exclude = [],
   direction,
 }: PostsProps) {
-  // Si no se proporcionan posts personalizados, obtén todos los posts
-  let allBlogs = customPosts || getPosts(["src", "app", "blog", "posts"]);
+  const [start, end] = range || [0, customPosts.length];
+  const filteredPosts = customPosts.filter((post) => !exclude.includes(post.slug));
+  const displayedPosts = filteredPosts.slice(start, end);
 
-  // Excluir por slug (coincidencia exacta)
-  if (exclude.length) {
-    allBlogs = allBlogs.filter((post) => !exclude.includes(post.slug));
-  }
-
-  // Ordenar por fecha de publicación
-  const sortedBlogs = [...allBlogs].sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
-  });
-
-  // Aplicar rango si se especifica
-  const displayedBlogs = range
-    ? sortedBlogs.slice(range[0] - 1, range.length === 2 ? range[1] : sortedBlogs.length)
-    : sortedBlogs;
-
-  if (displayedBlogs.length === 0) {
+  if (displayedPosts.length === 0) {
     return (
       <Text variant="body-default-m" style={{ textAlign: 'center', padding: '2rem 0' }}>
         No se encontraron publicaciones con los filtros seleccionados.
@@ -59,8 +56,22 @@ export function Posts({
 
   return (
     <Grid columns={columns} s={{ columns: 1 }} fillWidth marginBottom="40" gap="16">
-      {displayedBlogs.map((post) => (
-        <Post key={post.slug} post={post} thumbnail={thumbnail} direction={direction} />
+      {displayedPosts.map((post: PostType) => (
+        <Post 
+          key={post.slug}
+          post={{
+            slug: post.slug,
+            metadata: {
+              title: post.metadata.title,
+              summary: post.metadata.summary,
+              publishedAt: post.metadata.publishedAt,
+              image: post.metadata.image,
+              tags: post.metadata.tags || []
+            }
+          }}
+          thumbnail={thumbnail}
+          direction={direction}
+        />
       ))}
     </Grid>
   );

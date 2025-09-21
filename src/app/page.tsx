@@ -14,7 +14,7 @@ import {
 import { home, about, person, baseURL, routes } from "@/resources";
 import { Mailchimp } from "@/components";
 import { Projects } from "@/components/work/Projects";
-import { Posts } from "@/components/blog/Posts";
+import Posts from "@/components/blog/Posts";
 
 export async function generateMetadata() {
   return Meta.generate({

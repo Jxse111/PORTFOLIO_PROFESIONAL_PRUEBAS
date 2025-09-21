@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { Column, Heading, Text } from "@once-ui-system/core";
 import { Mailchimp } from "@/components";
-import { Posts } from "@/components/blog/Posts";
+import Posts from "@/components/blog/Posts";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { baseURL, blog, person } from "@/resources";
 
