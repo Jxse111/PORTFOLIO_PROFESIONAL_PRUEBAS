@@ -86,7 +86,8 @@ export function BlogSearch({
     onSearch(searchResults);
   }, [searchResults, onSearch]);
 
-  const handleInputChange = (value: string) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
     setSearchQuery(value);
   };
 
@@ -102,33 +103,11 @@ export function BlogSearch({
     <div className={className}>
       <Row fillWidth gap="8" align="center">
         <Input
+          id="blog-search"
           type="text"
           value={searchQuery}
           onChange={handleInputChange}
           placeholder={placeholder}
-          fillWidth
-          prefix={
-            <Icon name="search" size="s" />
-          }
-          suffix={
-            hasActiveSearch ? (
-              <button
-                onClick={handleClearSearch}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '2px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-                aria-label="Limpiar búsqueda"
-              >
-                <Icon name="close" size="xs" />
-              </button>
-            ) : undefined
-          }
           style={{
             '--input-border-color': 'var(--color-neutral-alpha-weak)',
             '--input-focus-border-color': 'var(--color-primary)',
@@ -140,7 +119,7 @@ export function BlogSearch({
       {hasActiveSearch && (
         <Row fillWidth gap="8" marginTop="8" align="center">
           <Text variant="body-default-xs" onBackground="neutral-weak">
-            Buscando "{debouncedQuery}"
+            Buscando &ldquo;{debouncedQuery}&rdquo;
           </Text>
           <Text variant="body-default-xs" onBackground="neutral-weak">
             {searchResults.length} resultado{searchResults.length !== 1 ? 's' : ''} encontrado{searchResults.length !== 1 ? 's' : ''}
@@ -152,7 +131,7 @@ export function BlogSearch({
       {hasActiveSearch && !hasResults && (
         <Row fillWidth marginTop="8">
           <Text variant="body-default-s" style={{ color: 'var(--color-neutral-medium)' }}>
-            No se encontraron artículos que coincidan con "{debouncedQuery}"
+            No se encontraron artículos que coincidan con &ldquo;{debouncedQuery}&rdquo;
           </Text>
         </Row>
       )}

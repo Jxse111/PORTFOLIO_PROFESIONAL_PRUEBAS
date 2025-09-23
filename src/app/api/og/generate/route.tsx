@@ -62,14 +62,18 @@ export async function GET(request: Request) {
             gap: "5rem",
           }}
         >
-          <img
-            src={baseURL + person.avatar}
+          <div
             style={{
               width: "12rem",
               height: "12rem",
-              objectFit: "cover",
+              backgroundImage: `url(${baseURL + person.avatar})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
               borderRadius: "100%",
+              backgroundRepeat: "no-repeat",
             }}
+            role="img"
+            aria-label={person.name}
           />
           <div
             style={{

@@ -1,4 +1,25 @@
-import { PostType } from "@/components/blog/Posts";
+// Tipo base para Post
+export interface PostType {
+  slug: string;
+  metadata: {
+    title: string;
+    summary: string;
+    publishedAt: string;
+    image?: string;
+    tags?: string[];
+    // Propiedades adicionales que podrían estar presentes
+    images?: string[];
+    tag?: string | string[];
+    team?: Array<{
+      name: string;
+      role: string;
+      avatar: string;
+      linkedIn: string;
+    }>;
+    link?: string;
+  };
+  content: string;
+}
 
 // Tipos para BlogSearch
 export interface BlogSearchProps {

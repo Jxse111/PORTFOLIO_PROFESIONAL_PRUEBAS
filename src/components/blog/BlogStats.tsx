@@ -1,9 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { Card, Column, Row, Text, Progress } from "@once-ui-system/core";
-import { BlogStatsProps, BlogStatistics } from "@/types/blog-utils.types";
-import { PostType } from "@/components/blog/Posts";
+import { Card, Column, Row, Text } from "@once-ui-system/core";
+import { BlogStatsProps, BlogStatistics, PostType } from "@/types/blog-utils.types";
 
 export function BlogStats({
   posts,
@@ -172,15 +171,13 @@ export function BlogStats({
                       </Text>
                     </Row>
 
-                    <div style={{ flex: 1, maxWidth: '120px' }}>
-                      <Progress
-                        value={tagInfo.percentage}
-                        size="s"
-                        style={{
-                          '--progress-background': 'var(--color-neutral-alpha-weak)',
-                          '--progress-foreground': 'var(--color-primary)',
-                        } as React.CSSProperties}
-                      />
+                    <div style={{ flex: 1, maxWidth: '120px', height: '4px', backgroundColor: 'var(--color-neutral-alpha-weak)', borderRadius: '2px' }}>
+                      <div style={{
+                        width: `${tagInfo.percentage}%`,
+                        height: '100%',
+                        backgroundColor: 'var(--color-primary)',
+                        borderRadius: '2px'
+                      }} />
                     </div>
                   </Row>
                 ))}

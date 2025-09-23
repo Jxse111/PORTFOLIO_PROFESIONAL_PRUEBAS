@@ -62,36 +62,37 @@ export function BlogSort({
     onSort(sortedPosts);
   }, [sortedPosts, onSort]);
 
-  const handleSortChange = (value: string) => {
-    const newSort = value as SortOption;
-    setSelectedSort(newSort);
-  };
-
   const currentSortConfig = SORT_OPTIONS.find(option => option.option === selectedSort);
 
   return (
     <div className={className}>
       <Row fillWidth gap="12" align="center">
-        <Icon name="sort" size="s" style={{ color: 'var(--color-neutral-medium)' }} />
-        <Text variant="label-default-m" style={{ color: 'var(--color-neutral-medium)' }}>
+        <label htmlFor="blog-sort" style={{ color: 'var(--color-neutral-medium)' }}>
           Ordenar por:
-        </Text>
-        <Select
+        </label>
+        <select
+          id="blog-sort"
           value={selectedSort}
-          onChange={handleSortChange}
-          fillWidth={false}
+          onChange={(e) => {
+            const newSort = e.target.value as SortOption;
+            setSelectedSort(newSort);
+          }}
           style={{
             minWidth: '160px',
-            '--select-border-color': 'var(--color-neutral-alpha-weak)',
-            '--select-focus-border-color': 'var(--color-primary)',
-          } as React.CSSProperties}
+            padding: '8px 12px',
+            borderRadius: '6px',
+            border: '1px solid var(--color-neutral-alpha-weak)',
+            backgroundColor: 'var(--color-background)',
+            color: 'var(--color-on-background)',
+            fontSize: '14px',
+          }}
         >
           {SORT_OPTIONS.map((sortOption) => (
             <option key={sortOption.option} value={sortOption.option}>
               {sortOption.label}
             </option>
           ))}
-        </Select>
+        </select>
 
         {/* Información adicional del orden actual */}
         {currentSortConfig && (

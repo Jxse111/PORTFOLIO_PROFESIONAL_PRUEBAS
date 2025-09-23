@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { Row, Text, Progress } from "@once-ui-system/core";
+import { Row, Text } from "@once-ui-system/core";
 import { ReadingProgressProps, ReadingState } from "@/types/blog-utils.types";
 
 export function ReadingProgress({
@@ -72,24 +72,24 @@ export function ReadingProgress({
         left: 0,
         right: 0,
         zIndex: 999,
-        backgroundColor: 'var(--color-background)',
+        backgroundColor: 'var(--color-background-alpha-95)',
         borderBottom: '1px solid var(--color-neutral-alpha-weak)',
         padding: 'var(--spacing-4) var(--spacing-16)',
         backdropFilter: 'blur(8px)',
-        backgroundColor: 'var(--color-background-alpha-95)',
       }}
     >
       <Row fillWidth align="center" gap="16">
         {/* Barra de progreso */}
         <div style={{ flex: 1, maxWidth: '400px' }}>
-          <Progress
-            value={readingState.progress}
-            size="s"
-            style={{
-              '--progress-background': 'var(--color-neutral-alpha-weak)',
-              '--progress-foreground': 'var(--color-primary)',
-            } as React.CSSProperties}
-          />
+          <div style={{ width: '100%', height: '4px', backgroundColor: 'var(--color-neutral-alpha-weak)', borderRadius: '2px' }}>
+            <div style={{
+              width: `${readingState.progress}%`,
+              height: '100%',
+              backgroundColor: 'var(--color-primary)',
+              borderRadius: '2px',
+              transition: 'width 0.2s ease'
+            }} />
+          </div>
         </div>
 
         {/* Información de lectura */}
