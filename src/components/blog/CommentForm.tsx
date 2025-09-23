@@ -77,7 +77,7 @@ export default function CommentForm({ postTitle, postSlug }: CommentFormProps) {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://formspree.io/f/xeqyjwpj', {
+      const response = await fetch('https://formspree.io/f/mvgwokdw', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
