@@ -11,7 +11,7 @@ export type ServerPost = {
     summary: string;
     image?: string;
     images: string[];
-    tag?: string | string[];
+    tags?: string[];
     team: Array<{
       name: string;
       role: string;
@@ -45,7 +45,7 @@ export function getServerPosts(): ServerPost[] {
         summary: data.summary || "",
         image: data.image || "",
         images: data.images || [],
-        tags: Array.isArray(data.tag) ? data.tag : data.tag ? [data.tag] : [],
+        tags: Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : [],
         team: data.team || [],
         link: data.link || "",
       },

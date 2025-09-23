@@ -16,8 +16,6 @@ export type Post = {
     image?: string;
     tags?: string[];
     // Propiedades adicionales que no están en PostType pero que necesitamos
-    images?: string[];
-    tag?: string | string[];
     team?: Array<{
       name: string;
       role: string;
@@ -44,11 +42,11 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
     const tags = new Set<string>();
     
     for (const post of allPosts) {
-      const postTags = post.metadata.tag;
-      if (Array.isArray(postTags)) {
-        for (const tag of postTags) tags.add(tag);
-      } else if (typeof postTags === 'string' && postTags) {
-        tags.add(postTags);
+      const postTags = post.metadata.tags;
+      if (postTags && postTags.length > 0) {
+        for (const tag of postTags) {
+          if (tag) tags.add(tag);
+        }
       }
     }
     
@@ -60,11 +58,10 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
     if (selectedTags.length === 0) return allPosts;
     
     return allPosts.filter(post => {
-      const postTags = post.metadata.tag;
-      if (!postTags) return false;
+      const postTags = post.metadata.tags;
+      if (!postTags || postTags.length === 0) return false;
       
-      const tagsArray = Array.isArray(postTags) ? postTags : [postTags];
-      return selectedTags.some(tag => tagsArray.includes(tag));
+      return selectedTags.some(tag => postTags.includes(tag));
     });
   }, [allPosts, selectedTags]);
 
