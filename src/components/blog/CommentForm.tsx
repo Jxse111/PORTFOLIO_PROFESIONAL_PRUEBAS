@@ -58,7 +58,7 @@ export default function CommentForm({ postTitle, postSlug }: CommentFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validar formulario
+    // Validación básica del lado del cliente
     if (!formData.name.trim() || !formData.email.trim() || !formData.comment.trim()) {
       alert('Por favor, completa todos los campos requeridos.');
       return;
@@ -77,37 +77,28 @@ export default function CommentForm({ postTitle, postSlug }: CommentFormProps) {
     setIsSubmitting(true);
 
     try {
-      const form = e.target as HTMLFormElement;
-      const formDataObj = new FormData(form);
-
-      // Crear el cuerpo del email
-      const emailBody = {
-        name: formDataObj.get('name'),
-        email: formDataObj.get('email'),
-        comment: formDataObj.get('comment'),
-        postTitle,
-        postSlug,
-        subject: `Nuevo comentario en: ${postTitle}`,
-        _next: typeof window !== 'undefined' ? window.location.href : '',
-        _captcha: 'false'
-      };
-
-      const response = await fetch('https://formspree.io/f/xeqyjwpj', {
+      const response = await fetch('/api/comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
         },
-        body: JSON.stringify(emailBody),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          comment: formData.comment,
+          postTitle,
+          postSlug
+        }),
       });
+
+      const data = await response.json();
 
       if (response.ok) {
         setSubmitted(true);
         setFormData({ name: '', email: '', comment: '' });
         setErrors({});
       } else {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Error del servidor: ${response.status}`);
+        throw new Error(data.error || 'Error al enviar el comentario');
       }
     } catch (error) {
       console.error('Error al enviar comentario:', error);
