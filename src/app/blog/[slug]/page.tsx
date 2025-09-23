@@ -16,7 +16,7 @@ import {
 } from "@once-ui-system/core";
 import { baseURL, about, blog, person } from "@/resources";
 import { formatDate } from "@/utils/formatDate";
-import { getPosts } from "@/utils/utils";
+import { getServerPosts } from "@/utils/server-utils";
 import type { Metadata } from "next";
 import React from "react";
 import Posts from "@/components/blog/Posts";
@@ -24,7 +24,7 @@ import { ShareSection } from "@/components/blog/ShareSection";
 import CommentForm from "@/components/blog/CommentForm";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const posts = getPosts(["src", "app", "blog", "posts"]);
+  const posts = getServerPosts();
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -40,7 +40,7 @@ export async function generateMetadata({
     ? routeParams.slug.join("/")
     : routeParams.slug || "";
 
-  const posts = getPosts(["src", "app", "blog", "posts"]);
+  const posts = getServerPosts();
   const post = posts.find((p) => p.slug === slugPath);
 
   if (!post) return {};
@@ -60,7 +60,7 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
     ? routeParams.slug.join("/")
     : routeParams.slug || "";
 
-  const post = getPosts(["src", "app", "blog", "posts"]).find((p) => p.slug === slugPath);
+  const post = getServerPosts().find((p) => p.slug === slugPath);
 
   if (!post) {
     notFound();
