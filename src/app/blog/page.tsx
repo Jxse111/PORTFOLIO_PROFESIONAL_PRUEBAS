@@ -14,7 +14,7 @@ export async function generateMetadata() {
 }
 
 export default async function Blog() {
-  const posts = getServerPosts().sort((a, b) => 
+  const posts = getServerPosts().sort((a, b) =>
     new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime()
   );
 

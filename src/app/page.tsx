@@ -15,6 +15,7 @@ import { home, about, person, baseURL, routes } from "@/resources";
 import { Mailchimp } from "@/components";
 import { Projects } from "@/components/work/Projects";
 import Posts from "@/components/blog/Posts";
+import { getServerPosts } from "@/utils/server-utils";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -26,7 +27,12 @@ export async function generateMetadata() {
   });
 }
 
-export default function Home() {
+export default async function Home() {
+  // Obtener los posts más recientes ordenados por fecha
+  const recentPosts = getServerPosts().sort((a, b) =>
+    new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime()
+  ).slice(0, 2); // Tomar solo los 2 posts más recientes
+
   return (
     <Column maxWidth="m" gap="xl" paddingY="12" horizontal="center">
       <Schema
@@ -115,7 +121,7 @@ export default function Home() {
               </Heading>
             </Row>
             <Row flex={3} paddingX="20">
-              <Posts range={[1, 2]} columns="2" />
+              <Posts posts={recentPosts} columns="2" />
             </Row>
           </Row>
           <Row fillWidth paddingLeft="64" horizontal="end">

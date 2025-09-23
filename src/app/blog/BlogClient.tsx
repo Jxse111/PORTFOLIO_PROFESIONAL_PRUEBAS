@@ -14,8 +14,8 @@ export type Post = {
     summary: string;
     publishedAt: string;
     image?: string;
+    images?: string[];
     tags?: string[];
-    // Propiedades adicionales que no están en PostType pero que necesitamos
     team?: Array<{
       name: string;
       role: string;
@@ -24,7 +24,7 @@ export type Post = {
     }>;
     link?: string;
   };
-  content: string; // Requerido por PostType
+  content: string;
 };
 
 interface BlogClientProps {

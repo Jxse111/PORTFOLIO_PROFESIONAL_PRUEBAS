@@ -66,7 +66,7 @@ export default function Posts({
               summary: post.metadata.summary,
               publishedAt: post.metadata.publishedAt,
               image: post.metadata.image,
-              tags: post.metadata.tags || []
+              tags: post.metadata.tags
             }
           }}
           thumbnail={thumbnail}

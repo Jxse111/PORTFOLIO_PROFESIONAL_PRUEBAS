@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
 import { notFound } from "next/navigation";
 
@@ -10,9 +10,9 @@ export type ServerPost = {
     publishedAt: string;
     summary: string;
     image?: string;
-    images: string[];
+    images?: string[];
     tags?: string[];
-    team: Array<{
+    team?: Array<{
       name: string;
       role: string;
       avatar: string;
@@ -25,29 +25,29 @@ export type ServerPost = {
 
 export function getServerPosts(): ServerPost[] {
   const postsDirectory = path.join(process.cwd(), "src", "app", "blog", "posts");
-  
+
   if (!fs.existsSync(postsDirectory)) {
     return [];
   }
 
   const fileNames = fs.readdirSync(postsDirectory).filter(file => file.endsWith('.mdx'));
-  
+
   return fileNames.map(fileName => {
     const filePath = path.join(postsDirectory, fileName);
     const fileContents = fs.readFileSync(filePath, "utf8");
     const { data, content } = matter(fileContents);
-    
+
     return {
       slug: fileName.replace(/\.mdx$/, ""),
       metadata: {
         title: data.title || "",
-        publishedAt: data.publishedAt,
+        publishedAt: data.publishedAt || "",
         summary: data.summary || "",
-        image: data.image || "",
-        images: data.images || [],
+        image: data.image || undefined,
+        images: Array.isArray(data.images) ? data.images : [],
         tags: Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : [],
-        team: data.team || [],
-        link: data.link || "",
+        team: Array.isArray(data.team) ? data.team : [],
+        link: data.link || undefined,
       },
       content: content || "",
     };
