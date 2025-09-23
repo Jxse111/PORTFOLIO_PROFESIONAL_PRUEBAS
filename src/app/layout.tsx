@@ -33,7 +33,8 @@ export async function generateMetadata() {
     ...meta,
     other: {
       ...(meta.other || {}),
-      'google-site-verification': 'VckdCxqskD_EuWFyUEYHMDqp3345V5-zc61gvmPAIlY'
+      'google-site-verification': 'VckdCxqskD_EuWFyUEYHMDqp3345V5-zc61gvmPAIlY',
+      'google-adsense-account': 'ca-pub-6521852465419849'
     }
   };
 }
