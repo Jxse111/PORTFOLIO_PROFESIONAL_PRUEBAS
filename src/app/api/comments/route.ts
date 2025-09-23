@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextRequest } from 'next/server';
 
 interface CommentData {
   name: string;
@@ -8,31 +8,34 @@ interface CommentData {
   postSlug: string;
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método no permitido' });
-  }
-
+export async function POST(request: NextRequest) {
   try {
-    const { name, email, comment, postTitle, postSlug }: CommentData = req.body;
+    const body: CommentData = await request.json();
+    const { name, email, comment, postTitle, postSlug } = body;
 
     // Validar datos requeridos
     if (!name || !email || !comment || !postTitle) {
-      return res.status(400).json({ error: 'Todos los campos son requeridos' });
+      return Response.json(
+        { error: 'Todos los campos son requeridos' },
+        { status: 400 }
+      );
     }
 
     // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: 'Email inválido' });
+      return Response.json(
+        { error: 'Email inválido' },
+        { status: 400 }
+      );
     }
 
     // Validar longitud del comentario
     if (comment.trim().length < 10) {
-      return res.status(400).json({ error: 'El comentario debe tener al menos 10 caracteres' });
+      return Response.json(
+        { error: 'El comentario debe tener al menos 10 caracteres' },
+        { status: 400 }
+      );
     }
 
     // Aquí puedes agregar la lógica para:
@@ -68,13 +71,16 @@ Este comentario fue enviado desde tu portfolio profesional.
     // Aquí iría la lógica real para enviar el email
     // Por ejemplo, usando Nodemailer, SendGrid, etc.
 
-    return res.status(200).json({
+    return Response.json({
       success: true,
       message: 'Comentario enviado exitosamente'
     });
 
   } catch (error) {
     console.error('Error al procesar comentario:', error);
-    return res.status(500).json({ error: 'Error interno del servidor' });
+    return Response.json(
+      { error: 'Error interno del servidor' },
+      { status: 500 }
+    );
   }
 }

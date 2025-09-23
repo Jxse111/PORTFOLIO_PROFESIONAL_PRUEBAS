@@ -77,7 +77,7 @@ export default function CommentForm({ postTitle, postSlug }: CommentFormProps) {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/comments', {
+      const response = await fetch('https://formspree.io/f/xeqyjwpj', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,10 @@ export default function CommentForm({ postTitle, postSlug }: CommentFormProps) {
           email: formData.email,
           comment: formData.comment,
           postTitle,
-          postSlug
+          postSlug,
+          subject: `Nuevo comentario en: ${postTitle}`,
+          _next: typeof window !== 'undefined' ? window.location.href : '',
+          _redirect: false
         }),
       });
 
