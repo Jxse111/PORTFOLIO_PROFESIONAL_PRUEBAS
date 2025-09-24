@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Column, Heading, Text } from "@once-ui-system/core";
+import { Column, Heading, Text, Flex } from "@once-ui-system/core";
 import { Mailchimp } from "@/components";
 import Posts from "@/components/blog/Posts";
-import { BlogFilters } from "@/components/blog/BlogFilters";
-import { baseURL, blog, person } from "@/resources";
+import { CategoryFilter } from "@/components/blog/CategoryFilter";
+import { TimeFilter } from "@/components/blog/TimeFilter";
+import { blog } from "@/resources";
 
 export type Post = {
   slug: string;
@@ -32,55 +33,55 @@ interface BlogClientProps {
 }
 
 export default function BlogClient({ initialPosts }: BlogClientProps) {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  
+  // Estado de filtros (dropdowns)
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>("newest");
+
   // Usar los posts iniciales del servidor
   const allPosts = useMemo(() => initialPosts, [initialPosts]);
 
-  // Extraer todas las etiquetas únicas de los posts
-  const allTags = useMemo<string[]>(() => {
-    const tags = new Set<string>();
-    
+  // Categorías únicas basadas en tags
+  const categories = useMemo<string[]>(() => {
+    const set = new Set<string>();
     for (const post of allPosts) {
-      const postTags = post.metadata.tags;
-      if (postTags && postTags.length > 0) {
-        for (const tag of postTags) {
-          if (tag) tags.add(tag);
-        }
-      }
+      const postTags = post.metadata.tags || [];
+      for (const t of postTags) if (t) set.add(t);
     }
-    
-    return Array.from(tags).sort();
+    return Array.from(set).sort();
   }, [allPosts]);
 
-  // Filtrar posts basados en las etiquetas seleccionadas
-  const filteredPosts = useMemo(() => {
-    if (selectedTags.length === 0) return allPosts;
-    
-    return allPosts.filter(post => {
-      const postTags = post.metadata.tags;
-      if (!postTags || postTags.length === 0) return false;
-      
-      return selectedTags.some(tag => postTags.includes(tag));
+  // Filtrado por categoría y ordenación por tiempo
+  const filteredAndSortedPosts = useMemo(() => {
+    let filtered = allPosts;
+    if (selectedCategory) {
+      filtered = allPosts.filter((post) => {
+        const postTags = post.metadata.tags || [];
+        return postTags.includes(selectedCategory);
+      });
+    }
+
+    const sorted = [...filtered].sort((a, b) => {
+      const dateA = new Date(a.metadata.publishedAt).getTime();
+      const dateB = new Date(b.metadata.publishedAt).getTime();
+      switch (selectedTimeFilter) {
+        case "newest":
+          return dateB - dateA;
+        case "oldest":
+          return dateA - dateB;
+        case "last-updated":
+          // Si en el futuro hay "updatedAt", usarla. Por ahora, publishedAt
+          return dateB - dateA;
+        default:
+          return dateB - dateA;
+      }
     });
-  }, [allPosts, selectedTags]);
-
-  const handleTagToggle = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag)
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
-    );
-  };
-
-  const handleClearFilters = () => {
-    setSelectedTags([]);
-  };
+    return sorted;
+  }, [allPosts, selectedCategory, selectedTimeFilter]);
 
   // Agrupar posts por categoría para mostrar en secciones
-  const featuredPosts = filteredPosts.slice(0, 1);
-  const secondaryPosts = filteredPosts.slice(1, 3);
-  const morePosts = filteredPosts.slice(3);
+  const featuredPosts = filteredAndSortedPosts.slice(0, 1);
+  const secondaryPosts = filteredAndSortedPosts.slice(1, 3);
+  const morePosts = filteredAndSortedPosts.slice(3);
 
   return (
     <Column maxWidth="m" paddingTop="24">
@@ -88,15 +89,18 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
         {blog.title}
       </Heading>
       
-      {/* Filtros */}
-      {allTags.length > 0 && (
-        <BlogFilters 
-          allTags={allTags}
-          selectedTags={selectedTags}
-          onTagToggle={handleTagToggle}
-          onClearFilters={handleClearFilters}
+      {/* Filtros (categoría + tiempo) */}
+      <Flex direction="column" gap="16" marginBottom="24" style={{ width: "100%", flexWrap: "wrap" }}>
+        <CategoryFilter
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
         />
-      )}
+        <TimeFilter
+          selectedTimeFilter={selectedTimeFilter}
+          onTimeFilterChange={setSelectedTimeFilter}
+        />
+      </Flex>
 
       <Column fillWidth flex={1} gap="40">
         {/* Post destacado */}
@@ -130,7 +134,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
         )}
         
         {/* Mensaje cuando no hay resultados */}
-        {filteredPosts.length === 0 && (
+        {filteredAndSortedPosts.length === 0 && (
           <Text variant="body-default-m" style={{ textAlign: 'center', padding: '2rem 0' }}>
             No se encontraron publicaciones con los filtros seleccionados.
           </Text>
