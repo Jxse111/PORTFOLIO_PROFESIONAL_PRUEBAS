@@ -1,7 +1,11 @@
 "use client";
 
+<<<<<<< HEAD
 import { Text } from "@once-ui-system/core";
 import type React from "react";
+=======
+import { Flex, Text, Select } from "@once-ui-system/core";
+>>>>>>> cc35403ae83f6032b76c6ee0806d77f6ace1eadb
 
 interface CategoryFilterProps {
   categories: string[];
@@ -15,6 +19,7 @@ export function CategoryFilter({
   onCategoryChange,
 }: CategoryFilterProps) {
   return (
+<<<<<<< HEAD
     <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 200 }}>
       <Text variant="label-strong-m">Filtrar por categoría</Text>
       <label htmlFor="category-select" className="sr-only">Categoría</label>
@@ -29,6 +34,15 @@ export function CategoryFilter({
           background: "var(--color-background)",
           color: "var(--color-on-background)",
         }}
+=======
+    <Flex direction="column" gap="8">
+      <Text variant="label-strong-m">Filtrar por categoría:</Text>
+      <Select
+        label="Categoría"
+        value={selectedCategory}
+        onChange={(e) => onCategoryChange(e.target.value)}
+        size="m"
+>>>>>>> cc35403ae83f6032b76c6ee0806d77f6ace1eadb
       >
         <option value="">Todas las categorías</option>
         {categories.map((category) => (
@@ -36,7 +50,12 @@ export function CategoryFilter({
             {category}
           </option>
         ))}
+<<<<<<< HEAD
       </select>
     </div>
+=======
+      </Select>
+    </Flex>
+>>>>>>> cc35403ae83f6032b76c6ee0806d77f6ace1eadb
   );
 }
