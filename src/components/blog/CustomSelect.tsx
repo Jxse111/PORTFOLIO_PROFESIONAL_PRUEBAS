@@ -110,7 +110,7 @@ export function CustomSelect({
         ref={triggerRef}
         type="button"
         aria-haspopup="listbox"
-        aria-expanded={open}
+        aria-expanded={open ? "true" : "false"}
         aria-controls={`${listboxId}-listbox`}
         className={`${styles.select} ${styles.customSelectTrigger}`}
         onClick={() => setOpen((o) => !o)}
@@ -134,8 +134,8 @@ export function CustomSelect({
       </button>
 
       {open && (
-        <ul
-          ref={listRef}
+        <div
+          ref={listRef as unknown as React.RefObject<HTMLDivElement>}
           id={`${listboxId}-listbox`}
           role="listbox"
           aria-label={ariaLabel || placeholder}
@@ -146,11 +146,11 @@ export function CustomSelect({
           {options.map((opt, idx) => {
             const selected = value === opt.value;
             return (
-              <li
+              <div
                 key={opt.value}
                 data-index={idx}
                 role="option"
-                aria-selected={selected}
+                aria-selected={selected ? "true" : "false"}
                 tabIndex={0}
                 className={`${styles.customSelectOption} ${selected ? styles.customSelectOptionSelected : ""}`}
                 onClick={() => selectByIndex(idx)}
@@ -162,10 +162,10 @@ export function CustomSelect({
                 onMouseEnter={() => setActiveIndex(idx)}
               >
                 {opt.label}
-              </li>
+              </div>
             );
           })}
-        </ul>
+        </div>
       )}
     </div>
   );

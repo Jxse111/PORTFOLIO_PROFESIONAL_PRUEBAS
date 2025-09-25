@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Column, Row, Text, Button, Textarea, Input, Flex } from "@once-ui-system/core";
+import { isValidEmail, normalizeEmail } from "@/lib/validation";
 
 interface CommentFormProps {
   postTitle: string;
@@ -27,7 +28,7 @@ export default function CommentForm({ postTitle, postSlug }: CommentFormProps) {
 
     if (!formData.email.trim()) {
       newErrors.email = 'El email es requerido';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    } else if (!isValidEmail(formData.email)) {
       newErrors.email = 'Ingresa un email válido';
     }
 
@@ -64,7 +65,7 @@ export default function CommentForm({ postTitle, postSlug }: CommentFormProps) {
       return;
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    if (!isValidEmail(formData.email)) {
       alert('Por favor, ingresa un email válido.');
       return;
     }
@@ -84,7 +85,7 @@ export default function CommentForm({ postTitle, postSlug }: CommentFormProps) {
         },
         body: JSON.stringify({
           name: formData.name,
-          email: formData.email,
+          email: normalizeEmail(formData.email),
           comment: formData.comment,
           postTitle,
           postSlug,
