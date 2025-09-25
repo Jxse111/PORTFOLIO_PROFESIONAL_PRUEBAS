@@ -3,6 +3,7 @@
 import { Text } from "@once-ui-system/core";
 import type React from "react";
 import styles from "./BlogFilters.module.css";
+import { CustomSelect } from "./CustomSelect";
 
 interface CategoryFilterProps {
   categories: string[];
@@ -19,19 +20,14 @@ export function CategoryFilter({
     <div className={styles.selectBlock}>
       <Text variant="label-strong-m">Filtrar por categoría</Text>
       <label htmlFor="category-select" className="sr-only">Categoría</label>
-      <select
+      <CustomSelect
         id="category-select"
+        ariaLabel="Categoría"
+        placeholder="Todas las categorías"
         value={selectedCategory}
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => onCategoryChange(e.target.value)}
-        className={styles.select}
-      >
-        <option value="">Todas las categorías</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
+        options={[{ value: "", label: "Todas las categorías" }, ...categories.map((c) => ({ value: c, label: c }))]}
+        onChange={onCategoryChange}
+      />
     </div>
   );
 }
