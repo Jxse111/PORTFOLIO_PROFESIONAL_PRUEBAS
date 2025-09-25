@@ -135,7 +135,8 @@
   list-style: none;
   border-radius: 10px;
   border: 1px solid var(--color-neutral-alpha-weak);
-  background: color-mix(in srgb, var(--color-background) 85%, transparent);
+  /* Base translucent background */
+  background: color-mix(in srgb, var(--color-background) 88%, transparent);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
@@ -156,10 +157,43 @@
 .customSelectOption:hover,
 .customSelectOption:focus {
   outline: none;
-  background: color-mix(in srgb, var(--color-background) 75%, transparent);
+  background: color-mix(in srgb, var(--color-background) 78%, transparent);
 }
 
 .customSelectOptionSelected {
-  background: color-mix(in srgb, var(--color-background) 68%, transparent);
+  background: color-mix(in srgb, var(--color-background) 72%, transparent);
   font-weight: 600;
+}
+
+/* Ensure readable contrast depending on scheme (stabilize background regardless of underlying content) */
+@media (prefers-color-scheme: light) {
+  .customSelectMenu {
+    background: color-mix(in srgb, var(--color-background) 94%, white 6%);
+  }
+  .customSelectOption:hover,
+  .customSelectOption:focus {
+    background: color-mix(in srgb, var(--color-background) 90%, white 10%);
+  }
+  .customSelectOptionSelected {
+    background: color-mix(in srgb, var(--color-background) 86%, white 14%);
+  }
+  .select {
+    background: color-mix(in srgb, var(--color-background) 88%, white 12%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .customSelectMenu {
+    background: color-mix(in srgb, var(--color-background) 86%, black 14%);
+  }
+  .customSelectOption:hover,
+  .customSelectOption:focus {
+    background: color-mix(in srgb, var(--color-background) 80%, black 20%);
+  }
+  .customSelectOptionSelected {
+    background: color-mix(in srgb, var(--color-background) 76%, black 24%);
+  }
+  .select {
+    background: color-mix(in srgb, var(--color-background) 84%, black 16%);
+  }
 }
