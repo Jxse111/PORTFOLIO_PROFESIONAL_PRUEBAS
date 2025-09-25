@@ -168,17 +168,24 @@
 /* Ensure readable contrast depending on scheme (stabilize background regardless of underlying content) */
 @media (prefers-color-scheme: light) {
   .customSelectMenu {
-    background: color-mix(in srgb, var(--color-background) 94%, white 6%);
+    /* Make menu background more solid in light mode for readability */
+    background: color-mix(in srgb, var(--color-background) 98%, white 2%);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    backdrop-filter: saturate(160%) blur(12px);
+    border-color: rgba(0, 0, 0, 0.08);
   }
   .customSelectOption:hover,
   .customSelectOption:focus {
-    background: color-mix(in srgb, var(--color-background) 90%, white 10%);
+    /* Less transparent on hover */
+    background: color-mix(in srgb, var(--color-background) 96%, white 4%);
   }
   .customSelectOptionSelected {
-    background: color-mix(in srgb, var(--color-background) 86%, white 14%);
+    /* Less transparent for selected */
+    background: color-mix(in srgb, var(--color-background) 94%, white 6%);
   }
   .select {
-    background: color-mix(in srgb, var(--color-background) 88%, white 12%);
+    /* Trigger slightly more solid too */
+    background: color-mix(in srgb, var(--color-background) 92%, white 8%);
   }
   /* Ensure text is dark and readable in light mode */
   .select,
@@ -190,6 +197,8 @@
   .customSelectOption,
   .customSelectOptionSelected {
     font-weight: 500;
+    text-shadow: none;
+    mix-blend-mode: normal;
   }
 }
 
