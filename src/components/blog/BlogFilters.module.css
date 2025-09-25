@@ -185,7 +185,7 @@
   .customSelectMenu,
   .customSelectOption,
   .customSelectOptionSelected {
-    color: #0B1220; /* stronger neutral for readability */
+    color: #000000; /* pure black for maximum contrast in light mode */
   }
   .customSelectOption,
   .customSelectOptionSelected {
