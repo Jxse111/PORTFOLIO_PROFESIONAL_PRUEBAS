@@ -22,6 +22,7 @@ export type ServerPost = {
     }>;
     link?: string;
   };
+  content: string;
 };
 
 export function getServerPosts(): ServerPost[] {
