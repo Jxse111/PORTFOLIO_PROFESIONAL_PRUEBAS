@@ -180,6 +180,13 @@
   .select {
     background: color-mix(in srgb, var(--color-background) 88%, white 12%);
   }
+  /* Ensure text is dark and readable in light mode */
+  .select,
+  .customSelectMenu,
+  .customSelectOption,
+  .customSelectOptionSelected {
+    color: #101828; /* near-neutral-900 */
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -195,5 +202,12 @@
   }
   .select {
     background: color-mix(in srgb, var(--color-background) 84%, black 16%);
+  }
+  /* Ensure text is light and readable in dark mode */
+  .select,
+  .customSelectMenu,
+  .customSelectOption,
+  .customSelectOptionSelected {
+    color: #F2F4F7; /* near-neutral-100 */
   }
 }
