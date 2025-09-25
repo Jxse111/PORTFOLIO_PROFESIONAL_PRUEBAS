@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { Column, Heading, Text, Flex } from "@once-ui-system/core";
 import { Mailchimp } from "@/components";
 import Posts from "@/components/blog/Posts";
 import { CategoryFilter } from "@/components/blog/CategoryFilter";
 import { TimeFilter } from "@/components/blog/TimeFilter";
 import { blog } from "@/resources";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import styles from "../../components/blog/BlogFilters.module.css";
 
 export type Post = {
   slug: string;
@@ -36,6 +38,35 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
   // Estado de filtros (dropdowns)
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>("newest");
+
+  // Sincronizar filtros con la URL para que sean compartibles y persistentes
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Leer filtros desde la URL al cargar / cambiar los params
+  useEffect(() => {
+    const cat = searchParams?.get("category") || "";
+    const sort = searchParams?.get("sort") || "newest";
+    setSelectedCategory(cat);
+    setSelectedTimeFilter(sort);
+  }, [searchParams]);
+
+  // Helper para actualizar query params sin recargar la página
+  const updateQueryParams = useCallback(
+    (category: string, sort: string) => {
+      const params = new URLSearchParams(searchParams?.toString());
+      if (category) params.set("category", category);
+      else params.delete("category");
+
+      if (sort && sort !== "newest") params.set("sort", sort);
+      else params.delete("sort");
+
+      const query = params.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    },
+    [pathname, router, searchParams]
+  );
 
   // Usar los posts iniciales del servidor
   const allPosts = useMemo(() => initialPosts, [initialPosts]);
@@ -89,17 +120,58 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
         {blog.title}
       </Heading>
       
-      {/* Filtros (categoría + tiempo) */}
-      <Flex direction="column" gap="16" marginBottom="24" style={{ width: "100%", flexWrap: "wrap" }}>
+      {/* Barra de filtros (categoría + tiempo + limpiar + contador) */}
+      <Flex direction="row" gap="16" marginBottom="24" className={styles.blogFilters}>
         <CategoryFilter
           categories={categories}
           selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
+          onCategoryChange={(value) => {
+            setSelectedCategory(value);
+            updateQueryParams(value, selectedTimeFilter);
+          }}
         />
         <TimeFilter
           selectedTimeFilter={selectedTimeFilter}
-          onTimeFilterChange={setSelectedTimeFilter}
+          onTimeFilterChange={(value) => {
+            setSelectedTimeFilter(value);
+            updateQueryParams(selectedCategory, value);
+          }}
         />
+        {/* Botón limpiar filtros */}
+        {(selectedCategory || selectedTimeFilter !== "newest") && (
+          <button
+            type="button"
+            aria-label="Limpiar filtros"
+            onClick={() => {
+              setSelectedCategory("");
+              setSelectedTimeFilter("newest");
+              updateQueryParams("", "newest");
+            }}
+            className={styles.clearButton}
+          >
+            <span className={styles.buttonContent}>
+              <svg
+                className={styles.icon}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+              <span>Limpiar filtros</span>
+            </span>
+          </button>
+        )}
+        <div className={styles.spacer} />
+        {/* Contador de resultados */}
+        <Text variant="label-default-m">
+          {filteredAndSortedPosts.length} resultado{filteredAndSortedPosts.length !== 1 ? "s" : ""}
+        </Text>
       </Flex>
 
       <Column fillWidth flex={1} gap="40">
@@ -135,7 +207,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
         
         {/* Mensaje cuando no hay resultados */}
         {filteredAndSortedPosts.length === 0 && (
-          <Text variant="body-default-m" style={{ textAlign: 'center', padding: '2rem 0' }}>
+          <Text variant="body-default-m" className={styles.emptyMessage}>
             No se encontraron publicaciones con los filtros seleccionados.
           </Text>
         )}

@@ -1,0 +1,101 @@
+.blogFilters {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.selectBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 200px;
+}
+
+.select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-neutral-alpha-weak);
+  background: var(--color-background);
+  color: var(--color-on-background);
+  font: inherit;
+  line-height: 1.4;
+  transition: border-color 120ms ease-in-out, box-shadow 120ms ease-in-out, background 120ms ease-in-out;
+}
+
+.select:hover {
+  border-color: var(--color-neutral-alpha-weak);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.select:active {
+  border-color: var(--color-neutral-alpha-weak);
+}
+
+.clearButton {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--color-neutral-alpha-weak);
+  background: var(--color-background);
+  color: var(--color-on-background);
+  cursor: pointer;
+  transition: background 120ms ease-in-out, border-color 120ms ease-in-out, box-shadow 120ms ease-in-out;
+}
+
+.clearButton:hover {
+  background: var(--color-neutral-alpha-weak);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.clearButton:active {
+  background: var(--color-neutral-alpha-weak);
+  border-color: var(--color-neutral-alpha-weak);
+}
+
+.select:focus-visible,
+.clearButton:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--color-neutral-alpha-weak);
+}
+
+@media (max-width: 640px) {
+  .selectBlock {
+    flex: 1 1 100%;
+  }
+  .select {
+    width: 100%;
+  }
+}
+
+.emptyMessage {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .clearButton {
+    transition: none;
+  }
+}
+
+/* Inline icon next to button text */
+.buttonContent {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+}
