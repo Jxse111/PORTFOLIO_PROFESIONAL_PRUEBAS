@@ -185,7 +185,11 @@
   .customSelectMenu,
   .customSelectOption,
   .customSelectOptionSelected {
-    color: #101828; /* near-neutral-900 */
+    color: #0B1220; /* stronger neutral for readability */
+  }
+  .customSelectOption,
+  .customSelectOptionSelected {
+    font-weight: 500;
   }
 }
 
