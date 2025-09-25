@@ -193,6 +193,18 @@
   .customSelectOption,
   .customSelectOptionSelected {
     color: #000000; /* pure black for maximum contrast in light mode */
+    -webkit-text-fill-color: #000000;
+  }
+  /* Increase specificity to override any inherited colors */
+  .customSelectMenu .customSelectOption,
+  .customSelectMenu .customSelectOptionSelected {
+    color: #000000;
+    -webkit-text-fill-color: #000000;
+  }
+  /* Ensure descendants also get black text (icons/spans) */
+  .customSelectMenu, .customSelectMenu * {
+    color: #000000;
+    -webkit-text-fill-color: #000000;
   }
   .customSelectOption,
   .customSelectOptionSelected {
