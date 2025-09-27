@@ -138,6 +138,8 @@
   /* Base translucent background */
   background: color-mix(in srgb, var(--color-background) 88%, transparent);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  /* Asegurar que el texto siempre use las variables CSS correctas */
+  color: var(--color-on-background);
 }
 
 @supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
@@ -158,81 +160,73 @@
 .customSelectOption:focus {
   outline: none;
   background: color-mix(in srgb, var(--color-background) 78%, transparent);
+  color: var(--color-on-background);
 }
 
 .customSelectOptionSelected {
   background: color-mix(in srgb, var(--color-background) 72%, transparent);
   font-weight: 600;
+  color: var(--color-on-background);
 }
 
-/* Ensure readable contrast depending on scheme (stabilize background regardless of underlying content) */
+/* Estilos específicos para modo claro */
 @media (prefers-color-scheme: light) {
   .customSelectMenu {
-    /* Make menu background more solid in light mode for readability */
-    background: color-mix(in srgb, var(--color-background) 98%, white 2%);
+    /* Hacer el menú más sólido en modo claro para legibilidad */
+    background: color-mix(in srgb, var(--color-background) 95%, white 5%);
     -webkit-backdrop-filter: saturate(160%) blur(12px);
     backdrop-filter: saturate(160%) blur(12px);
     border-color: rgba(0, 0, 0, 0.08);
+    /* Asegurar texto oscuro */
+    color: var(--color-on-background);
   }
+  
+  .customSelectOption {
+    color: var(--color-on-background);
+  }
+  
   .customSelectOption:hover,
   .customSelectOption:focus {
-    /* Less transparent on hover */
-    background: color-mix(in srgb, var(--color-background) 96%, white 4%);
+    background: color-mix(in srgb, var(--color-background) 90%, white 10%);
+    color: var(--color-on-background);
   }
+  
   .customSelectOptionSelected {
-    /* Less transparent for selected */
-    background: color-mix(in srgb, var(--color-background) 94%, white 6%);
+    background: color-mix(in srgb, var(--color-background) 85%, white 15%);
+    color: var(--color-on-background);
+    font-weight: 600;
   }
+  
   .select {
-    /* Trigger slightly more solid too */
     background: color-mix(in srgb, var(--color-background) 92%, white 8%);
-  }
-  /* Ensure text is dark and readable in light mode */
-  .select,
-  .customSelectMenu,
-  .customSelectOption,
-  .customSelectOptionSelected {
-    color: #000000; /* pure black for maximum contrast in light mode */
-    -webkit-text-fill-color: #000000;
-  }
-  /* Increase specificity to override any inherited colors */
-  .customSelectMenu .customSelectOption,
-  .customSelectMenu .customSelectOptionSelected {
-    color: #000000;
-    -webkit-text-fill-color: #000000;
-  }
-  /* Ensure descendants also get black text (icons/spans) */
-  .customSelectMenu, .customSelectMenu * {
-    color: #000000;
-    -webkit-text-fill-color: #000000;
-  }
-  .customSelectOption,
-  .customSelectOptionSelected {
-    font-weight: 500;
-    text-shadow: none;
-    mix-blend-mode: normal;
+    color: var(--color-on-background);
   }
 }
 
+/* Estilos específicos para modo oscuro */
 @media (prefers-color-scheme: dark) {
   .customSelectMenu {
     background: color-mix(in srgb, var(--color-background) 86%, black 14%);
+    color: var(--color-on-background);
   }
+  
+  .customSelectOption {
+    color: var(--color-on-background);
+  }
+  
   .customSelectOption:hover,
   .customSelectOption:focus {
     background: color-mix(in srgb, var(--color-background) 80%, black 20%);
+    color: var(--color-on-background);
   }
+  
   .customSelectOptionSelected {
     background: color-mix(in srgb, var(--color-background) 76%, black 24%);
+    color: var(--color-on-background);
   }
+  
   .select {
     background: color-mix(in srgb, var(--color-background) 84%, black 16%);
-  }
-  /* Ensure text is light and readable in dark mode */
-  .select,
-  .customSelectMenu,
-  .customSelectOption,
-  .customSelectOptionSelected {
-    color: #F2F4F7; /* near-neutral-100 */
+    color: var(--color-on-background);
   }
 }
