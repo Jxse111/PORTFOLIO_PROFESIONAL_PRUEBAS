@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { Column, Heading, Text, Flex } from "@once-ui-system/core";
-import NewsletterForm from "@/components/NewsletterForm";
+// import NewsletterForm from "@/components/NewsletterForm";
 import Posts from "@/components/blog/Posts";
 import { CategoryFilter } from "@/components/blog/CategoryFilter";
 import { TimeFilter } from "@/components/blog/TimeFilter";
@@ -190,7 +190,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
           />
         )}
         
-        <NewsletterForm />
+        {/* NewsletterForm */}
         
         {/* Más posts */}
         {morePosts.length > 0 && (
