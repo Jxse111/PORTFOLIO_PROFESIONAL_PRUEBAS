@@ -27,6 +27,7 @@ export default function NewsletterForm() {
       form.method = 'POST';
       form.action = 'https://app.us22.list-manage.com/subscribe/post?u=2cba46fd901f6409b897c6afa&id=297b4122f5&f_id=0054c2e1f0';
       form.target = '_blank';
+      form.style.display = 'none';
 
       // Email field
       const emailInput = document.createElement('input');
@@ -77,16 +78,18 @@ export default function NewsletterForm() {
 
       <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '400px' }}>
         <Column gap="16">
-          <Input
-            id="newsletter-email"
-            name="email"
-            type="email"
-            placeholder="tucorreo@ejemplo.com"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={isSubmitting}
-          />
+          <div>
+            <Input
+              id="newsletter-email"
+              name="email"
+              type="email"
+              placeholder="tucorreo@ejemplo.com"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
+            />
+          </div>
 
           <Row height="48" vertical="center">
             <Button
