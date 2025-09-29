@@ -1,8 +1,59 @@
 "use client";
 
-import { Column, Heading, Text } from "@once-ui-system/core";
+import { useState } from "react";
+import { Column, Heading, Text, Row, Input, Button } from "@once-ui-system/core";
 
 export default function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setMessage("");
+
+    // Validación básica del email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setMessage("Por favor, introduce un email válido.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      // Crear formulario y enviarlo
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://app.us22.list-manage.com/subscribe/post?u=2cba46fd901f6409b897c6afa&id=297b4122f5&f_id=0054c2e1f0';
+      form.target = '_blank';
+
+      // Email field
+      const emailInput = document.createElement('input');
+      emailInput.type = 'hidden';
+      emailInput.name = 'EMAIL';
+      emailInput.value = email;
+      form.appendChild(emailInput);
+
+      // Bot protection field
+      const botInput = document.createElement('input');
+      botInput.type = 'hidden';
+      botInput.name = 'b_2cba46fd901f6409b897c6afa_297b4122f5';
+      botInput.value = '';
+      form.appendChild(botInput);
+
+      // Submit the form
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+
+      setMessage("¡Gracias por suscribirte! Serás redirigido a Mailchimp para confirmar tu suscripción.");
+    } catch (error) {
+      setMessage("Error al procesar la suscripción. Inténtalo de nuevo.");
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <Column
       overflow="hidden"
@@ -24,87 +75,41 @@ export default function NewsletterForm() {
         </Text>
       </Column>
 
-      <div
-        id="mc_embed_shell"
-        dangerouslySetInnerHTML={{
-          __html: `
-            <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
-            <style type="text/css">
-              #mc_embed_signup {
-                background: transparent;
-                clear: left;
-                font: 14px Helvetica, Arial, sans-serif;
-                width: 100%;
-                max-width: 600px;
-              }
-              #mc_embed_signup h2 {
-                color: var(--neutral-on-background-strong);
-                margin-bottom: 16px;
-              }
-              #mc_embed_signup input[type="email"] {
-                background: var(--surface-background);
-                border: 1px solid var(--neutral-border-medium);
-                color: var(--neutral-on-background-strong);
-                padding: 12px;
-                border-radius: 8px;
-                width: 100%;
-                margin-bottom: 16px;
-                font-size: 16px;
-              }
-              #mc_embed_signup input[type="submit"] {
-                background: var(--brand-background-strong);
-                color: var(--brand-on-background-strong);
-                border: none;
-                padding: 12px 24px;
-                border-radius: 8px;
-                cursor: pointer;
-                font-weight: 600;
-                font-size: 16px;
-              }
-              #mc_embed_signup input[type="submit"]:hover {
-                background: var(--brand-background-medium);
-              }
-              .response {
-                margin-top: 16px;
-                padding: 12px;
-                border-radius: 8px;
-              }
-              #mce-success-response {
-                background: var(--success-background-weak);
-                color: var(--success-on-background-strong);
-                border: 1px solid var(--success-border-medium);
-              }
-              #mce-error-response {
-                background: var(--danger-background-weak);
-                color: var(--danger-on-background-strong);
-                border: 1px solid var(--danger-border-medium);
-              }
-            </style>
-            <div id="mc_embed_signup">
-              <form action="https://app.us22.list-manage.com/subscribe/post?u=2cba46fd901f6409b897c6afa&amp;id=297b4122f5&amp;f_id=0054c2e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-                <div id="mc_embed_signup_scroll">
-                  <div class="mc-field-group">
-                    <label for="mce-EMAIL">Email Address <span style="color: var(--danger-on-background-strong)">*</span></label>
-                    <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required placeholder="tucorreo@ejemplo.com">
-                  </div>
-                  <div id="mce-responses" class="clear foot">
-                    <div class="response" id="mce-error-response" style="display: none;"></div>
-                    <div class="response" id="mce-success-response" style="display: none;"></div>
-                  </div>
-                  <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                    <input type="text" name="b_2cba46fd901f6409b897c6afa_297b4122f5" tabindex="-1" value="">
-                  </div>
-                  <div class="optionalParent">
-                    <div class="clear foot">
-                      <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Suscribirse">
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          `
-        }}
-      />
+      <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '400px' }}>
+        <Column gap="16">
+          <Input
+            id="newsletter-email"
+            name="email"
+            type="email"
+            placeholder="tucorreo@ejemplo.com"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isSubmitting}
+          />
+
+          <Row height="48" vertical="center">
+            <Button
+              type="submit"
+              size="m"
+              fillWidth
+              disabled={isSubmitting || !email.trim()}
+            >
+              {isSubmitting ? "Suscribiendo..." : "Suscribirse"}
+            </Button>
+          </Row>
+
+          {message && (
+            <Text
+              variant="body-default-s"
+              onBackground={message.includes("Error") ? "danger-strong" : "success-strong"}
+              style={{ textAlign: "center" }}
+            >
+              {message}
+            </Text>
+          )}
+        </Column>
+      </form>
     </Column>
   );
 }
