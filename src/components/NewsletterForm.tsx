@@ -10,6 +10,18 @@ export default function NewsletterForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "duplicated" | "error">("idle");
   const [message, setMessage] = useState("");
 
+  const getMessageColor = () => {
+    switch (status) {
+      case "success":
+      case "duplicated":
+        return "success-strong";
+      case "error":
+        return "danger-strong";
+      default:
+        return "neutral-weak";
+    }
+  };
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const normalized = normalizeEmail(email);
@@ -33,16 +45,16 @@ export default function NewsletterForm() {
       }
       if (data.duplicated) {
         setStatus("duplicated");
-        setMessage("Ya estabas suscrito.");
+        setMessage("Ya estabas suscrito a la newsletter.");
       } else {
         setStatus("success");
-        setMessage("¡Suscripción realizada con éxito! ✨");
+        setMessage("¡Suscripción realizada con éxito! 🎉");
       }
       setEmail("");
     } catch (err) {
       console.error(err);
       setStatus("error");
-      setMessage("Ha ocurrido un error. Inténtalo de nuevo más tarde.");
+      setMessage("Ha ocurrido un error. Verifica tu conexión e inténtalo de nuevo.");
     }
   };
 
@@ -63,7 +75,7 @@ export default function NewsletterForm() {
           Newsletter
         </Heading>
         <Text wrap="balance" marginBottom="l" variant="body-default-l" onBackground="neutral-weak">
-          Suscríbete y recibe un correo cada vez que publique un nuevo post.
+          Suscríbete y recibe un correo cada vez que publique un nuevo post sobre desarrollo web y tecnología.
         </Text>
       </Column>
       <form onSubmit={onSubmit}>
@@ -72,19 +84,29 @@ export default function NewsletterForm() {
             id="newsletter-email"
             name="email"
             type="email"
-            placeholder="Correo/Email"
+            placeholder="tucorreo@ejemplo.com"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             errorMessage={error}
+            disabled={status === "loading"}
           />
           <Row height="48" vertical="center">
-            <Button type="submit" size="m" fillWidth disabled={status === "loading"}>
-              {status === "loading" ? "Enviando..." : "Suscribirse"}
+            <Button
+              type="submit"
+              size="m"
+              fillWidth
+              disabled={status === "loading" || !email.trim()}
+            >
+              {status === "loading" ? "Suscribiendo..." : "Suscribirse"}
             </Button>
           </Row>
           {message && (
-            <Text variant="body-default-s" onBackground={status === "error" ? "danger-strong" : "success-strong"}>
+            <Text
+              variant="body-default-s"
+              onBackground={getMessageColor()}
+              style={{ textAlign: "center" }}
+            >
               {message}
             </Text>
           )}
