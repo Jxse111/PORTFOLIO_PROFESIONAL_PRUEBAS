@@ -188,7 +188,6 @@ export default function ChatModal({ onClose }: ChatModalProps) {
                 <div className="message-content">
                   <div className="message-bubble">
                     <p>{msg.text}</p>
-                    {msg.id === 'welcome'}
                   </div>
                   <div className="message-time">
                     {formatTime(msg.timestamp)}
