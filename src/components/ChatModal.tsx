@@ -46,7 +46,7 @@ export default function ChatModal({ onClose }: ChatModalProps) {
       // Add a default welcome message if no stored messages
       const welcomeMessage: Message = {
         id: 'welcome',
-        text: 'Bienvenido al apartado de Chat, lamentablemente está en obras, espero que en breve pueda ayudarte...',
+        text: 'Bienvenido al apartado de Chat,en que puedo ayudarte?',
         sender: 'agent',
         timestamp: new Date(),
       };
@@ -226,10 +226,10 @@ export default function ChatModal({ onClose }: ChatModalProps) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Escribe tu mensaje..."
-            disabled={true}
+            disabled={isLoading}
             onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
           />
-          <Button onClick={sendMessage} disabled={true} variant="primary">
+          <Button onClick={sendMessage} disabled={isLoading} variant="primary">
             {isLoading ? 'Enviando...' : 'Enviar'}
 
           </Button>
