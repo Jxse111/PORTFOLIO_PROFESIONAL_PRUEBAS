@@ -63,11 +63,31 @@ export default function ChatModal({ onClose }: ChatModalProps) {
 
   // Auto scroll to bottom when new messages arrive
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length > 0) {
+      // Only auto-scroll if user is already near bottom
+      const messagesContainer = document.getElementById('chat-messages');
+      if (messagesContainer) {
+        const { scrollTop, scrollHeight, clientHeight } = messagesContainer;
+        const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+
+        if (isNearBottom) {
+          scrollToBottom();
+        }
+      }
+    }
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const messagesContainer = document.getElementById('chat-messages');
+    if (messagesContainer) {
+      // Use requestAnimationFrame for smoother scrolling
+      requestAnimationFrame(() => {
+        messagesContainer.scrollTo({
+          top: messagesContainer.scrollHeight,
+          behavior: 'smooth'
+        });
+      });
+    }
   };
 
   const sendMessage = async () => {
@@ -161,7 +181,8 @@ export default function ChatModal({ onClose }: ChatModalProps) {
           {/* Espacio para mantener centrado */}
           <div className="header-spacer" />
         </div>
-        <div className="chat-messages">
+        <div className="chat-separator"></div>
+        <div className="chat-messages" id="chat-messages">
           {messages.map((msg) => (
             <div key={msg.id} className={`message-container ${msg.sender}`}>
               <div className={`message ${msg.sender}`}>
@@ -254,11 +275,16 @@ export default function ChatModal({ onClose }: ChatModalProps) {
         .chat-modal {
           height: 450px;
           width: 320px;
+          max-height: 80vh;
+          max-width: 90vw;
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
           margin-bottom: 20px;
           display: flex;
           flex-direction: column;
           font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
         }
         .chat-header {
           display: flex;
@@ -351,11 +377,34 @@ export default function ChatModal({ onClose }: ChatModalProps) {
           color:rgb(158, 158, 158);
           font-weight: 500;
         }
+        .chat-separator {
+          height: 1px;
+          background: linear-gradient(90deg, transparent 0%, var(--color-neutral-medium) 20%, var(--color-neutral-medium) 80%, transparent 100%);
+          flex-shrink: 0;
+        }
         .chat-messages {
-          flex: 1;
+          flex: 1 1 auto;
           overflow-y: auto;
+          overflow-x: hidden;
           padding: 20px 16px;
           background-color: transparent;
+          scroll-behavior: smooth;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+        }
+        .chat-messages::-webkit-scrollbar {
+          width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+          background-color: rgba(0, 0, 0, 0.2);
+          border-radius: 3px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+          background-color: rgba(0, 0, 0, 0.3);
         }
         .message-container {
           display: flex;
@@ -448,6 +497,8 @@ export default function ChatModal({ onClose }: ChatModalProps) {
           padding: 16px 20px;
           background-color: var(--color-surface);
           border-top: 1px solid var(--color-neutral-medium);
+          flex-shrink: 0;
+          min-height: 60px;
         }
         .chat-input-area input {
           flex: 1;
@@ -477,19 +528,30 @@ export default function ChatModal({ onClose }: ChatModalProps) {
           .chat-modal {
             width: 100%;
             height: 100vh;
-            max-height: none;
+            max-height: 100vh;
+            max-width: 100vw;
             margin-bottom: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            position: fixed;
           }
           .chat-header {
             padding: 20px;
+            min-height: 60px;
+          }
+          .chat-messages {
+            padding: 16px;
+            flex: 1 1 auto;
+          }
+          .chat-input-area {
+            min-height: 70px;
+            padding: 16px;
           }
           .avatar {
             width: 45px;
             height: 45px;
             font-size: 20px;
-          }
-          .chat-messages {
-            padding: 16px;
           }
           .message-bubble p {
             font-size: 16px;
